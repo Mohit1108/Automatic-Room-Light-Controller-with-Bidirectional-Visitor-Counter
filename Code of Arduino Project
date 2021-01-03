@@ -1,0 +1,97 @@
+#include<LiquidCrystal.h>
+LiquidCrystal lcd(13,12,11,10,9,8);
+
+#define in 14
+#define out 19
+#define relay 2
+
+int count=0;
+
+
+void IN()
+{
+    count++;
+    lcd.clear();
+    lcd.print("Person In Room:");
+    lcd.setCursor(0,1);
+    lcd.print(count);
+    digitalWrite(3, HIGH);
+    delay(1000);
+    digitalWrite(3, LOW);
+
+    delay(1300);
+}
+
+void OUT()
+{
+  count--;
+    lcd.clear();
+    lcd.print("Person In Room:");
+    lcd.setCursor(0,1);
+    lcd.print(count);
+    digitalWrite(4, HIGH);
+    delay(1000);
+    digitalWrite(4, LOW);
+
+    delay(1300);
+}
+
+void setup()
+{
+  lcd.begin(16,2);
+  lcd.print(" Welcome To Our");  
+  delay(1500);
+
+  lcd.begin(16,2);
+  lcd.print("Visitor  Counter");
+  delay(1500);
+  
+  lcd.begin(16,2);
+  lcd.print("    Machine");
+  delay(1500);
+  
+  lcd.begin(16,2);
+  lcd.print("   Created BY ");
+  delay(2000);
+  
+  lcd.begin(16,2);
+  lcd.print("Mohit goyal");
+  delay(2000);
+
+
+
+  delay(2000);
+  pinMode(in, INPUT);
+  pinMode(out, INPUT);
+  pinMode(3, OUTPUT);
+  pinMode(4, OUTPUT);
+
+
+  lcd.clear();
+  lcd.print("Person In Room:");
+  lcd.setCursor(0,1);
+  lcd.print(count);
+}
+
+void loop()
+{  
+  
+  if(digitalRead(in))
+  IN();
+  if(digitalRead(out))
+  OUT();
+  
+  if(count<=0)
+  {
+    lcd.clear();
+    lcd.print("Nobody In Room");
+    lcd.setCursor(0,1);
+    lcd.print("Light Is Off");
+    delay(300);
+
+  }
+  
+  else
+    digitalWrite(1, HIGH);
+  
+}
